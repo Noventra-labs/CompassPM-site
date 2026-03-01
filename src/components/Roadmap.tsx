@@ -6,7 +6,7 @@ import { Check, Circle, Clock } from "lucide-react";
 const roadmapItems = [
   {
     quarter: "Q1 2026",
-    status: "completed",
+    status: "in-progress",
     title: "Core Platform Launch",
     items: [
       "Jira & Notion integrations",
@@ -16,7 +16,7 @@ const roadmapItems = [
   },
   {
     quarter: "Q2 2026",
-    status: "in-progress",
+    status: "planned",
     title: "Enterprise Features",
     items: [
       "SSO & SAML authentication",
