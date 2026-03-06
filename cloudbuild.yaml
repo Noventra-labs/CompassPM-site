@@ -43,11 +43,17 @@ steps:
         "--max-instances",
         "3",
         "--set-env-vars",
-        "NODE_ENV=production",
+        "NODE_ENV=production,DATABASE_URL=${_DATABASE_URL},RESEND_API_KEY=${_RESEND_API_KEY},EMAIL_FROM=${_EMAIL_FROM}",
       ]
 
 images:
   - "gcr.io/$PROJECT_ID/compasspm-site"
 
+substitutions:
+  _DATABASE_URL: ""
+  _RESEND_API_KEY: ""
+  _EMAIL_FROM: ""
+
 options:
   logging: CLOUD_LOGGING_ONLY
+
