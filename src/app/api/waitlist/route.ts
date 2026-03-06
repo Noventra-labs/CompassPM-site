@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sendWaitlistWelcomeEmail } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,8 +43,17 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    // Send welcome email (non-blocking — signup succeeds even if email fails)
+    try {
+      await sendWaitlistWelcomeEmail(email);
+      console.log(`Waitlist welcome email sent to: ${email}`);
+    } catch (emailError) {
+      console.error(`Failed to send welcome email to ${email}:`, emailError);
+      // Don't fail the signup if email sending fails
+    }
+
     return NextResponse.json(
-      { message: "Successfully joined the waitlist!", id: entry.id },
+      { message: "Successfully joined the waitlist! Check your inbox 📬", id: entry.id },
       { status: 201 }
     );
   } catch (error) {
