@@ -1,9 +1,17 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 export async function sendWaitlistWelcomeEmail(email: string) {
-  const { error } = await resend.emails.send({
+  const client = getResendClient();
+  const { error } = await client.emails.send({
     from: process.env.EMAIL_FROM || "CompassPM <onboarding@resend.dev>",
     to: email,
     subject: "🎉 Welcome to the CompassPM Waitlist!",
