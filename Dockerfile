@@ -25,6 +25,10 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
+# Dummy URL for build — Prisma client needs this to exist at build time
+# (it doesn't actually connect). Real URL is injected at runtime via Cloud Run.
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+
 RUN npm run build
 
 # ============================================
